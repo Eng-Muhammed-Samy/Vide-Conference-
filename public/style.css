@@ -1,3 +1,16 @@
+main {
+    height: 100vh;
+    display: flex;
+}
+
+.left {
+    flex: 0.8;
+}
+
+.right {
+    flex: 0.2;
+}
+
 #video-grid {
     display: flex;
     justify-content: center;
@@ -7,5 +20,4 @@ video {
     height: 300px;
     width: 400px;
     object-fit: cover;
-    margin: 10px 10px;
 }
