@@ -11,11 +11,12 @@ const myVideo = document.createElement('video')
 myVideo.muted = true;
 
 const peers = {}
-
+let myVideoStream;
 navigator.mediaDevices.getUserMedia({
     video: true,
     audio: false
 }).then(stream => {
+    myVideoStream = stream;
     addVideoSream(myVideo, stream)
 
     myPeer.on('call', call => {
@@ -58,3 +59,17 @@ function addVideoSream(video, stream) {
     })
     videoGrid.append(video)
 }
+
+// messanger code 
+let text = $('input');
+$('html').keydown((e) => {
+    if (e.which == 13 && text.val().length !== 0) {
+        console.log(text.val());
+        socket.emit('message', text.val());
+        text.val('');
+    }
+})
+
+socket.on('createMessage', message => {
+    $('ul').append(`<li class = "message"><b>user </b>${message}</li>`)
+})

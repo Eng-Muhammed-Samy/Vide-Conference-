@@ -23,6 +23,9 @@ io.on('connection', socket => {
     socket.on('join-room', (roomid, userid) => {
         socket.join(roomid);
         socket.to(roomid).broadcast.emit("user-connected", userid);
+        socket.on('message', message => {
+            io.to(roomid).emit('createMessage', message)
+        })
         socket.on('disconnect', () => {
             socket.to(roomid).broadcast.emit("user-disconnected", userid);
         })
