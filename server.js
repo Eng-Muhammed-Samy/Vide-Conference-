@@ -31,4 +31,4 @@ io.on('connection', socket => {
         })
     })
 })
-server.listen(5050);
+server.listen(process.env.PORT || 5050);

@@ -51,7 +51,7 @@ main {
 }
 
 .controlls_buttons i {
-    font-size: 24px;
+    font-size: 18px;
 }
 
 .leave_meeting {
@@ -111,6 +111,7 @@ video {
     list-style: none;
 }
 
-.unmute {
+.unmute,
+.stop {
     color: #EB534B;
 }

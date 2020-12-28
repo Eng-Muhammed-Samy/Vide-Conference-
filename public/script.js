@@ -2,10 +2,7 @@ const socket = io("/");
 const videoGrid = document.getElementById('video-grid')
 
 
-const myPeer = new Peer(undefined, {
-    host: "/",
-    port: "5051"
-})
+const myPeer = new Peer()
 
 const myVideo = document.createElement('video')
 myVideo.muted = true;
@@ -23,7 +20,8 @@ navigator.mediaDevices.getUserMedia({
         call.answer(stream);
         const video = document.createElement('video');
         call.on('stream', userVideoStream => {
-            addVideoSream(video, userVideoStream)
+            if (myPeer)
+                addVideoSream(video, userVideoStream)
         })
     })
 
@@ -39,6 +37,11 @@ socket.on('user-disconnected', (userid) => {
 myPeer.on('open', id => {
     socket.emit('join-room', ROOM_ID, id)
 })
+
+
+
+
+
 
 function connectToNewUser(userid, straem) {
     const call = myPeer.call(userid, straem)
@@ -60,6 +63,8 @@ function addVideoSream(video, stream) {
     videoGrid.append(video)
 }
 
+
+
 // messanger code 
 let text = $('input');
 $('html').keydown((e) => {
@@ -71,7 +76,7 @@ $('html').keydown((e) => {
 })
 
 socket.on('createMessage', message => {
-        $('ul').append(`<li class = "message"><b>user </b>${message}</li>`)
+        $('ul').append(`<li class = "message"><b>Mohammed:  </b>${message}</li>`)
     })
     // mute our video
 const muteUnmute = () => {
@@ -129,3 +134,24 @@ const setPlayVideo = () => {
   `;
     document.querySelector(".main__video_button").innerHTML = html;
 };
+
+
+// document.getElementById('share').addEventListener('click', (e) => {
+//     navigator.mediaDevices.getDisplayMedia({
+//         video: {
+//             cursor: "always"
+//         },
+//         audio: {
+//             echoCancellation: true,
+//             noiseSuppression: true
+//         }
+//     }).then(straem => {
+//         let videoTrack = straem.getVideoTracks()[0]
+//         let sender = currentPeer.getSender().find((s) => {
+//             return s.track.kind = videoTrack.kind
+//         })
+//         sender.replaceTrack(videoTrack)
+//     }).cath(err => {
+//         console.log("unable to display media " + err)
+//     })
+// })
